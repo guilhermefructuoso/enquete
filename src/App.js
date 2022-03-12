@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import firebase from './firebaseConnection';
 import './index.css'
-import logo from './assets/gullivera.png';
+import logo from './assets/draxx_2.png';
 import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,15 +15,27 @@ function App() {
   useEffect(()=>{
     async function loadMusicas(){
       await firebase.firestore().collection('musicas')
-      .onSnapshot((doc)=>{
+      .onSnapshot((songs)=>{
         let minhasMusicas = [];
 
-        doc.forEach((item)=>{
+        songs.forEach((item)=>{
           minhasMusicas.push({
             id: item.id,
-            musica: item.data().musica
+            musica: item.data().musica,
+            dateTime: item.data().date_time
           })
         });
+
+        minhasMusicas.sort((songA, songB) => {
+          if (songA.dateTime >  songB.dateTime) {
+            return -1;
+          }
+          if (songA.dateTime <  songB.dateTime) {
+            return 1;
+          }
+            return 0;
+        })
+
 
         setMusicas(minhasMusicas);
 
