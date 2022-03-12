@@ -8,7 +8,7 @@ import App from './App';
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <ToastContainer autoClose={10000}/>
+    <ToastContainer autoClose={3000}/>
   </React.StrictMode>,
   document.getElementById('root')
 );
