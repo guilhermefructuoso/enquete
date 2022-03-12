@@ -16,14 +16,12 @@ function App() {
                 .firestore()
                 .collection('musicas')
                 .onSnapshot((songs) => {
-                    let minhasMusicas = []
-
-                    songs.forEach((item) => {
-                        minhasMusicas.push({
+                    const minhasMusicas = songs.map((item) => {
+                        return {
                             id: item.id,
                             musica: item.data().musica,
-                            dateTime: item.data().date_time,
-                        })
+                            dateTime: item.data().date_time
+                        }
                     })
 
                     minhasMusicas.sort((songA, songB) => {
@@ -87,16 +85,19 @@ function App() {
 
                 <div className="list">
                     <label>Músicas escolhidas:</label>
-
-                    <ul>
-                        {musicas.map((musica) => {
-                            return (
-                                <li key={musica.id}>
-                                    <span> {musica.musica} </span>
-                                </li>
-                            )
-                        })}
-                    </ul>
+                    {musicas.length ? (
+                        <ul>
+                            {musicas.map((musica) => {
+                                return (
+                                    <li key={musica.id}>
+                                        <span> {musica.musica} </span>
+                                    </li>
+                                )
+                            })}
+                        </ul>
+                    ) : (
+                        <p>Não há musicas</p>
+                    )}
                 </div>
             </div>
         </div>

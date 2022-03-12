@@ -1,0 +1,6 @@
+
+# Ignore assets:
+src/assets/**
+
+# Ignore all HTML files:
+*.html
