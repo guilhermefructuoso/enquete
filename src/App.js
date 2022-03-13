@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import firebase from './firebaseConnection'
 import './index.css'
-import logo from './assets/draxx_2.png'
+import logo from './assets/draxx_3.png'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -16,12 +16,14 @@ function App() {
                 .firestore()
                 .collection('musicas')
                 .onSnapshot((songs) => {
-                    const minhasMusicas = songs.map((item) => {
-                        return {
+                    let minhasMusicas = []
+
+                    songs.forEach((item) => {
+                        minhasMusicas.push({
                             id: item.id,
                             musica: item.data().musica,
-                            dateTime: item.data().date_time
-                        }
+                            dateTime: item.data().date_time,
+                        })
                     })
 
                     minhasMusicas.sort((songA, songB) => {
@@ -88,6 +90,7 @@ function App() {
                     {musicas.length ? (
                         <ul>
                             {musicas.map((musica) => {
+                                console.log(musicas)
                                 return (
                                     <li key={musica.id}>
                                         <span> {musica.musica} </span>
@@ -96,7 +99,7 @@ function App() {
                             })}
                         </ul>
                     ) : (
-                        <p>Não há musicas</p>
+                        <label className="render">Não há músicas enviadas :(</label>
                     )}
                 </div>
             </div>
